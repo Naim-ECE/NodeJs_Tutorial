@@ -1,5 +1,6 @@
 const { log } = require("console");
 const http = require("http");
+const fs = require("fs");
 
 // const requestListener = (req, res) => {
 //   console.log(req);
@@ -46,13 +47,18 @@ const server = http.createServer((req, res) => {
     res.write(`<body><h1>This is the Product Page</h1></body>`);
     res.write(`</html>`);
     return res.end();
+  } else if (req.url.toLowerCase() === "/upload" && req.method === "POST") {
+    fs.writeFileSync("user.txt", "Naimur Rahman");
+    res.statusCode = 302; // 302 -> means redirection
+    res.setHeader("Location", "/");
+    return res.end();
   } else {
     res.setHeader("Content-Type", "text/html");
     res.write(`<html>`);
     res.write(`<head><title>Random Coding</title></head>`);
     res.write(`<body><h1>This is a random page</h1></body>`);
     res.write(`</html>`);
-    res.end();
+    return res.end();
   }
 });
 // process.exit(); // ends the server execution
