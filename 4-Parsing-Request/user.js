@@ -1,5 +1,4 @@
 const { log } = require("console");
-const http = require("http");
 const fs = require("fs");
 
 // const requestListener = (req, res) => {
@@ -16,7 +15,7 @@ const fs = require("fs");
 
 // server listener
 
-const server = http.createServer((req, res) => {
+const requestHandler = (req, res) => {
   console.log(req.url, req.method);
 
   if (req.url === "/") {
@@ -82,11 +81,11 @@ const server = http.createServer((req, res) => {
     res.write(`</html>`);
     return res.end();
   }
-});
+};
 // process.exit(); // ends the server execution
 
-const PORT = 3000;
+module.exports = requestHandler;
 
-server.listen(PORT, () => {
-  console.log(`Server running on address http://localhost:${PORT}`);
-});
+// alternatives
+// module.exports.handler = requestHandler;
+// exports.handler = requestHandler;
