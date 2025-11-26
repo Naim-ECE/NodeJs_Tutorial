@@ -3,6 +3,8 @@ const hostRouter = express.Router();
 
 const path = require("path");
 
+const rootDir = require("../utils/pathUtil");
+
 // hostRouter.get("/host/add-home", (req, res, next) => {
 //   res.send(`<h1>Register for a home</h1>
 //             <form action="/host/add-home" method="POST">
@@ -14,12 +16,12 @@ const path = require("path");
 // }); // we can add /host like this or just can add it to app.js & concat it to the hostrouter
 
 hostRouter.get("/add-home", (req, res, next) => {
-  res.sendFile(path.join(__dirname, "../", "views", "addHome.html"));
+  res.sendFile(path.join(rootDir, "views", "addHome.html"));
 });
 
 hostRouter.post("/add-home", (req, res, next) => {
   console.log(req.body);
-  res.sendFile(path.join(__dirname, "../", "views", "homeAdded.html"));
+  res.sendFile(path.join(rootDir, "views", "homeAdded.html"));
 });
 
 module.exports = hostRouter;
