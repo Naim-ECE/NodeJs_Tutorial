@@ -1,0 +1,25 @@
+<%- include('./partials/head') %>
+  <body>
+    <%- include("partials/header") %>
+    <main class="max-w-3xl mx-auto mt-8 px-4">
+      <div class="flex justify-center">
+        <a
+          href="/host/add-home"
+          class="text-md bg-red-500 text-white px-4 py-2 m-3 rounded-md font-semibold hover:bg-red-600 active:bg-red-700 transition"
+        >
+          Add Home
+        </a>
+      </div>
+
+      <ul class="mt-4 space-y-2">
+        <% registeredHome.forEach(home => { %>
+        <li
+          class="p-3 bg-gray-100 rounded-lg m-4 shadow-md hover:bg-gray-200 transition"
+        >
+          <%= home.houseName %>
+        </li>
+        <% }); %>
+      </ul>
+    </main>
+  </body>
+</html>
