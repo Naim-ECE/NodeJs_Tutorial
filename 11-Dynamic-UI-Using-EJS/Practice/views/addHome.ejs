@@ -1,5 +1,6 @@
 <%- include("./partials/head") %>
   <body>
+    <%- include("partials/nav") %>
     <header class="text-center mt-8">
   <h1 class="text-2xl font-bold text-gray-800">Register for a home</h1>
 </header>
@@ -14,6 +15,38 @@
       type="text"
       name="houseName"
       placeholder="Enter the name of your house"
+      class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none
+             focus:ring-2 focus:ring-red-400 transition mb-3"
+    />
+
+    <input
+      type="text"
+      name="price"
+      placeholder="Price per night"
+      class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none
+             focus:ring-2 focus:ring-red-400 transition mb-3"
+    />
+
+    <input
+      type="text"
+      name="location"
+      placeholder="Enter the location"
+      class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none
+             focus:ring-2 focus:ring-red-400 transition mb-3"
+    />
+
+    <input
+      type="text"
+      name="rating"
+      placeholder="Rate our service"
+      class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none
+             focus:ring-2 focus:ring-red-400 transition mb-3"
+    />
+
+    <input
+      type="text"
+      name="photo"
+      placeholder="Add a photo link"
       class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none
              focus:ring-2 focus:ring-red-400 transition"
     />

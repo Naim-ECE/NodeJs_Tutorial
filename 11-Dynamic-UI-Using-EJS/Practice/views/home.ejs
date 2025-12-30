@@ -1,25 +1,44 @@
 <%- include('./partials/head') %>
   <body>
+    <%- include("partials/nav") %>
     <%- include("partials/header") %>
     <main class="max-w-3xl mx-auto mt-8 px-4">
-      <div class="flex justify-center">
-        <a
-          href="/host/add-home"
-          class="text-md bg-red-500 text-white px-4 py-2 m-3 rounded-md font-semibold hover:bg-red-600 active:bg-red-700 transition"
-        >
-          Add Home
-        </a>
-      </div>
 
-      <ul class="mt-4 space-y-2">
+      <div class="mt-4 flex flex-wrap justify-evenly">
         <% registeredHome.forEach(home => { %>
-        <li
+          <div class="w-80 bg-white rounded-lg shadow-lg overflow-hidden m-2 ml-3 mr-3">
+
+            <div class="h-48 bg-gray-300">
+              <img
+                src="<%= home.photo %>"
+                alt="House Image"
+                class="w-full h-full object-cover"
+              />
+            </div>
+
+            <div class="p-4 space-y-2">
+              <div class="text-lg font-semibold">
+                <%= home.houseName %>
+              </div>
+              <div class="text-green-600 font-bold">
+                <%= home.price %> BDT
+              </div>
+              <div class="text-gray-600">
+                <%= home.location %>
+              </div>
+              <div class="text-yellow-500">
+                ⭐ <%= home.rating %>/ 5
+              </div>
+            </div>
+
+        </div>
+        <!-- <li
           class="p-3 bg-gray-100 rounded-lg m-4 shadow-md hover:bg-gray-200 transition"
         >
           <%= home.houseName %>
-        </li>
+        </li> -->
         <% }); %>
-      </ul>
+      </div>
     </main>
   </body>
 </html>

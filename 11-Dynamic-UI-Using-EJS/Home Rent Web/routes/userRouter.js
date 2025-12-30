@@ -1,6 +1,6 @@
 const express = require("express");
 const userRouter = express.Router();
-const { registeredHome } = require("../routes/hostRouter");
+const { registeredHome } = require("./hostRouter");
 
 // path -> to address the view(html) path
 const path = require("path");
