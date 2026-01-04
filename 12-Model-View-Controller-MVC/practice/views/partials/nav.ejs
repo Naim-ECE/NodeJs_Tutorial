@@ -1,0 +1,38 @@
+<nav class="bg-red-600 p-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      
+      <div class="text-white font-bold text-lg">
+        HoMeRNT
+      </div>
+
+      <!-- Nav Links -->
+      <div class="space-x-6">
+        <a href="/home" 
+        class="text-white <%= currentPage === "Home" ? "bg-red-400 rounded-md" : "hover:bg-red-400" %> font-semibold p-1">
+          My Homes
+        </a>
+        <a href="/"
+        class="text-white <%= currentPage === "index" ? "bg-red-400 rounded-md" : "hover:bg-red-400" %> font-semibold p-1">
+          Home List
+        </a>
+        <a href="/host/host-home-list"
+        class="text-white <%= currentPage === "host-home" ? "bg-red-400 rounded-md" : "hover:bg-red-400" %> font-semibold p-1">
+          Host Home List
+        </a>
+        <a href="/bookings" 
+        class="text-white <%= currentPage === "bookings" ? "bg-red-400 rounded-md" : "hover:bg-red-400" %> font-semibold p-1">
+        Bookings
+        </a>
+        <a href="/favourite-list" 
+        class="text-white <%= currentPage === "favourite-list" ? "bg-red-400 rounded-md" : "hover:bg-red-400" %> font-semibold p-1">
+        Favourites
+       </a>
+       <a href="/host/add-home" 
+       class="text-white <%= currentPage === "Addhome" ? "bg-red-400 rounded-md" : "hover:bg-red-400" %> font-semibold p-1">
+       Add Home
+       </a>
+      </div>
+
+    </div>
+  </nav>
+  <!-- bg-white text-blue-600 px-4 py-2 rounded hover:bg-blue-100 font-medium -->
