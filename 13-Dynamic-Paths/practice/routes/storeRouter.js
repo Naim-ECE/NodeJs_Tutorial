@@ -6,6 +6,7 @@ const {
   getFavouriteList,
   index,
   getHomeDetails,
+  postAddToFavourite,
 } = require("../controllers/storeController");
 
 storeRouter.get("/", index);
@@ -13,5 +14,6 @@ storeRouter.get("/home", getHome);
 storeRouter.get("/bookings", getBookings);
 storeRouter.get("/favourite-list", getFavouriteList);
 storeRouter.get("/home/:homeId", getHomeDetails);
+storeRouter.post("/favourite-list", postAddToFavourite);
 
 module.exports = storeRouter;
