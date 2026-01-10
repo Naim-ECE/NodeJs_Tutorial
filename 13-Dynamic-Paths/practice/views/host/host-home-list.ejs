@@ -37,8 +37,15 @@
                 ⭐ <%= home.rating %>/ 5
               </div>
               <div class="flex justify-between">
-                <button class="bg-green-700 text-white p-[0.45rem] rounded-md cursor-pointer hover:bg-green-800 w-[4.5rem]">Edit</button>
-                <button class="bg-red-600 text-white p-[0.45rem] rounded-md cursor-pointer hover:bg-red-700 w-[4.5rem]">Delete</button>
+              <a
+                href="/host/edit-home/<%= home.id %>?editing=true"
+                class="bg-green-700 text-white p-[0.45rem] rounded-md cursor-pointer hover:bg-green-800 w-18 text-center">
+                Edit
+              </a>
+              <button 
+                class="bg-red-600 text-white p-[0.45rem] rounded-md cursor-pointer hover:bg-red-700 w-18">
+                Delete
+              </button>
               </div>
             </div>
 

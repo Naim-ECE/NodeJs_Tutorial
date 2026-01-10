@@ -19,10 +19,21 @@ module.exports = class Home {
 
   // prototype -> 2 objects points to only save()
   save() {
-    this.id = Math.random().toString();
     Home.fetchAll((registeredHome) => {
-      registeredHome.push(this);
-      const homeDataPath = path.join(rootDir, "data", "homes.json");
+      if (this.id) {
+        // edit home case
+        registeredHome = registeredHome.map((home) => {
+          if (home.id === this.id) {
+            return this;
+          } else {
+            return home;
+          }
+        });
+      } else {
+        // add home case
+        this.id = Math.random().toString();
+        registeredHome.push(this);
+      }
       fs.writeFile(homeDataPath, JSON.stringify(registeredHome), (error) => {
         console.log(`File writing concluded ${error}`);
       });
@@ -32,10 +43,15 @@ module.exports = class Home {
   // all files can access registered home by this function
   static fetchAll(callback) {
     fs.readFile(homeDataPath, (err, data) => {
-      if (!err) {
+      if (err || !data.length) {
+        callback([]);
+        return;
+      }
+
+      try {
         callback(JSON.parse(data));
-      } else {
-        callback(registeredHome);
+      } catch {
+        callback([]);
       }
     });
   }

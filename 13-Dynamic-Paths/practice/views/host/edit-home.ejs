@@ -1,0 +1,74 @@
+<%- include("../partials/head") %>
+  <body>
+    <%- include("../partials/nav") %>
+    <header class="text-center mt-8">
+  <h1 class="text-2xl font-bold text-gray-800"><%= editing ? "Edit" : "Register" %> home</h1>
+</header>
+
+<main class="max-w-md mx-auto mt-8 px-4">
+  <form
+    action="/host/<%= editing ? "edit-home" : "add-home" %>"
+    method="POST"
+    class="bg-white p-6 rounded-xl shadow-md"
+  >
+    <input 
+    type="hidden"
+    name="id"
+    value="<%= editing ? home.id : "" %>"
+    />
+    <input
+      type="text"
+      name="houseName"
+      value="<%= editing ? home.houseName : "" %>"
+      placeholder="Enter the name of your house"
+      class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none
+             focus:ring-2 focus:ring-red-400 transition mb-3"
+    />
+
+    <input
+      type="text"
+      name="price"
+      value="<%= editing ? home.price : "" %>"
+      placeholder="Price per night"
+      class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none
+             focus:ring-2 focus:ring-red-400 transition mb-3"
+    />
+
+    <input
+      type="text"
+      name="location"
+      value="<%= editing ? home.location : "" %>"
+      placeholder="Enter the location"
+      class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none
+             focus:ring-2 focus:ring-red-400 transition mb-3"
+    />
+
+    <input
+      type="text"
+      name="rating"
+      value="<%= editing ? home.rating : "" %>"
+      placeholder="Rate our service"
+      class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none
+             focus:ring-2 focus:ring-red-400 transition mb-3"
+    />
+
+    <input
+      type="text"
+      name="photo"
+      value="<%= editing ? home.photo : "" %>"
+      placeholder="Add a photo link"
+      class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none
+             focus:ring-2 focus:ring-red-400 transition"
+    />
+
+    <input
+      type="submit"
+      value="<%= editing ? "Update Home" : "Add Home" %>"
+      class="w-full mt-4 bg-red-500 text-white font-semibold py-2 rounded-lg
+             hover:bg-red-600 active:bg-red-700 transition cursor:pointer"
+    />
+  </form>
+</main>
+
+  </body>
+</html>
