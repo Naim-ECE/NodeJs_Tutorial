@@ -25,4 +25,12 @@ module.exports = class Favourite {
       }
     });
   }
+
+  static deleteFavourite(homeId, callback) {
+    Favourite.getFavourite((favourites) => {
+      console.log(favourites);
+      const homeDelete = favourites.filter((favourite) => favourite !== homeId);
+      fs.writeFile(favouriteDataPath, JSON.stringify(homeDelete), callback);
+    });
+  }
 };

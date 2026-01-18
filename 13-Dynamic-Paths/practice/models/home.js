@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const rootDir = require("../utils/pathUtil");
 const { json } = require("stream/consumers");
+const Favourite = require("./favourite");
 const homeDataPath = path.join(rootDir, "data", "homes.json");
 // const { registeredHome } = require("../controllers/hostController");
 
@@ -63,6 +64,15 @@ module.exports = class Home {
       // }
       const homeFound = homes.find((home) => home.id === homeId);
       callback(homeFound);
+    });
+  }
+
+  static deleteById(homeId, callback) {
+    this.fetchAll((homes) => {
+      const homeDelete = homes.filter((home) => home.id !== homeId);
+      fs.writeFile(homeDataPath, JSON.stringify(homeDelete), () => {
+        Favourite.deleteFavourite(homeId, callback);
+      });
     });
   }
 };

@@ -62,6 +62,17 @@ const getHostHome = (req, res, next) => {
   });
 };
 
+exports.postDeleteHome = (req, res, next) => {
+  const homeId = req.params.homeId;
+  console.log("Deleted ", homeId);
+  Home.deleteById(homeId, (error) => {
+    if (error) {
+      console.log(`Error while deleting ${error}`);
+    }
+    res.redirect("/host/host-home-list");
+  });
+};
+
 exports.getAddHome = getAddHome;
 exports.postAddHome = postAddHome;
 exports.getHostHome = getHostHome;

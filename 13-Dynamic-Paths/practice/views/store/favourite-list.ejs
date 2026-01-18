@@ -35,6 +35,11 @@
               <div class="text-yellow-500">
                 ⭐ <%= home.rating %>/ 5
               </div>
+              <form action="/delete-favourite-list/<%= home.id %>" method="POST">
+                <button type="submit" class="bg-red-600 text-white p-[0.45rem] rounded-md cursor-pointer hover:bg-red-700">
+                  Remove from favourites
+                </button>
+              </form>
             </div>
 
         </div>

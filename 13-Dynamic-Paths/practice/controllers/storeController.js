@@ -55,6 +55,22 @@ exports.postAddToFavourite = (req, res, next) => {
   });
 };
 
+exports.deleteFavouriteList = (req, res, next) => {
+  //Favourite.addToFavourite(req.body.id, (error) => {
+  // if (error) {
+  //   console.log("Error: ", error);
+  // }
+  const homeId = req.params.homeId;
+  console.log("Detected ", homeId);
+  Favourite.deleteFavourite(homeId, (error) => {
+    if (error) {
+      console.log("Error occurred ", error);
+    }
+    res.redirect("/favourite-list");
+  });
+  //});
+};
+
 exports.getHomeDetails = (req, res, next) => {
   const homeId = req.params.homeId;
   console.log(`At home details page, ${homeId}`);
