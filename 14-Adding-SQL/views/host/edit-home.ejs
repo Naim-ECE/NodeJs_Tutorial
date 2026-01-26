@@ -2,7 +2,7 @@
   <body>
     <%- include("../partials/nav") %>
     <header class="text-center mt-8">
-  <h1 class="text-2xl font-bold text-gray-800"><%= editing ? "Edit" : "Register" %> home</h1>
+  <h1 class="text-2xl font-bold text-black"><%= editing ? "Edit" : "Register" %> home</h1>
 </header>
 
 <main class="max-w-md mx-auto mt-8 px-4">
@@ -60,6 +60,16 @@
       class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none
              focus:ring-2 focus:ring-red-400 transition"
     />
+
+    <textarea
+      type="text"
+      name="description"
+      value="<%= editing ? home.description : "" %>"
+      placeholder="Describe your home"
+      class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none mt-4
+             focus:ring-2 focus:ring-red-400 transition"
+    ><%= editing ? home.description : "" %>
+    </textarea>
 
     <input
       type="submit"
