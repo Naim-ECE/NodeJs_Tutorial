@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "houseName": "Pak Building",
+    "price": "1400",
+    "location": "Gulshan",
+    "rating": "3",
+    "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZoU7ZGbW6fTctBWoHOttVn2JdyRI2hcLVeQ&s"
+  },
+  {
+    "houseName": "Second House",
+    "price": "2000",
+    "location": "Chog-gouri",
+    "rating": "2",
+    "photo": "https://www.bhg.com/thmb/TD9qUnFen4PBLDuB2hn9yhGXPv8=/1866x0/filters:no_upscale():strip_icc()/white-house-a-frame-section-c0a4a3b3-e722202f114e4aeea4370af6dbb4312b.jpg",
+    "id": "3"
+  },
+  {
+    "houseName": "Third House",
+    "price": "2000",
+    "location": "Chog-gouri",
+    "rating": "4.9",
+    "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnIJw4NBU6sWY-ACXNudTMSxjZe9B2Zp76Gw&s",
+    "id": "0.21995810016999484"
+  }
+]

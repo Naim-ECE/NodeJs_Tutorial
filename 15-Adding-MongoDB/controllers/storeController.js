@@ -1,0 +1,96 @@
+const Favourite = require("../models/favourite");
+const Home = require("../models/home");
+
+const getHome = (req, res, next) => {
+  Home.fetchAll().then(([registeredHome, fields]) => {
+    res.render("store/home-list", {
+      registeredHome,
+      pageTitle: "My Homes",
+      currentPage: "Home",
+    });
+  });
+};
+
+const index = (req, res, next) => {
+  Home.fetchAll().then(([registeredHome, fields]) => {
+    res.render("store/index", {
+      registeredHome,
+      pageTitle: "Home",
+      currentPage: "index",
+    });
+  });
+  //res.sendFile(path.join(rootDir, "views", "home.html"));
+};
+
+exports.getBookings = (req, res, next) => {
+  res.render("store/bookings", {
+    pageTitle: "My Bookings",
+    currentPage: "bookings",
+  });
+};
+
+const getFavouriteList = (req, res, next) => {
+  Favourite.getFavourite((favourite) => {
+    Home.fetchAll().then(([registeredHome, fields]) => {
+      const favouriteHomes = registeredHome.filter((home) =>
+        favourite.includes(home.id),
+      );
+      res.render("store/favourite-list", {
+        favouriteHomes,
+        pageTitle: "My Favourites",
+        currentPage: "favourite-list",
+      });
+    });
+  });
+};
+
+exports.postAddToFavourite = (req, res, next) => {
+  console.log("Add to favourite ", req.body);
+  Favourite.addToFavourite(req.body.id, (error) => {
+    if (error) {
+      console.log("Error: ", error);
+    }
+    res.redirect("/favourite-list");
+  });
+};
+
+exports.deleteFavouriteList = (req, res, next) => {
+  //Favourite.addToFavourite(req.body.id, (error) => {
+  // if (error) {
+  //   console.log("Error: ", error);
+  // }
+  const homeId = req.params.homeId;
+  console.log("Detected ", homeId);
+  Favourite.deleteFavourite(homeId, (error) => {
+    if (error) {
+      console.log("Error occurred ", error);
+    }
+    res.redirect("/favourite-list");
+  });
+  //});
+};
+
+exports.getHomeDetails = (req, res, next) => {
+  const homeId = req.params.homeId;
+  console.log(`At home details page, ${homeId}`);
+  Home.findById(homeId).then(([homes]) => {
+    const home = homes[0];
+    if (!home) {
+      console.log("Home not found");
+      res.redirect("/home");
+    } else {
+      console.log("Home details found ", home);
+
+      res.render("store/home-details", {
+        home,
+        pageTitle: "Home Details",
+        currentPage: "Home",
+      });
+    }
+  });
+};
+
+exports.registeredHome = this.registeredHome;
+exports.getHome = getHome;
+exports.getFavouriteList = getFavouriteList;
+exports.index = index;
