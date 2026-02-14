@@ -1,77 +1,65 @@
-const db = require("../utils/databaseUtil");
+const { ObjectId } = require("mongodb");
+const { getDB } = require("../utils/databaseUtil");
 
 module.exports = class Home {
-  constructor(houseName, price, location, rating, photo, description, id) {
+  constructor(houseName, price, location, rating, photo, description, _id) {
     this.houseName = houseName;
     this.price = price;
     this.location = location;
     this.rating = rating;
     this.photo = photo;
     this.description = description;
-    this.id = id;
+    if (_id) {
+      this._id = _id;
+    }
   }
 
   save() {
-    // adding values like this will takedown the entire databases by hackers by using { `)); DELETE * FROM homes } also known as SQL injection
-    // return db.execute(`INSERT INTO homes(houseName, price, location, rating, photo, description)
-    //   VALUES("${this.houseName}", "${this.price}", "${this.location}", "${this.rating}", "${this.photo}", "${this.description}")`);
-
-    if (this.id) {
+    const db = getDB();
+    if (this._id) {
       // update
-      return db.execute(
-        `UPDATE homes SET houseName=?, price=?, location=?, rating=?, photo=?, description=? WHERE id=?`,
-        [
-          this.houseName,
-          this.price,
-          this.location,
-          this.rating,
-          this.photo,
-          this.description,
-          this.id,
-        ],
-      );
+      const updateFields = {
+        houseName: this.houseName,
+        price: this.price,
+        location: this.location,
+        rating: this.rating,
+        photo: this.photo,
+        description: this.description,
+      };
+      return db
+        .collection("homes")
+        .updateOne(
+          { _id: new ObjectId(String(this._id)) },
+          { $set: updateFields },
+        );
     } else {
-      // add
-      return db.execute(
-        "INSERT INTO homes(houseName, price, location, rating, photo, description) VALUES(?, ?, ?, ?, ?, ?)",
-        [
-          this.houseName,
-          this.price,
-          this.location,
-          this.rating,
-          this.photo,
-          this.description,
-        ],
-      );
+      // insert
+      return db
+        .collection("homes")
+        .insertOne(this)
+        .then((result) => {
+          console.log(result);
+        });
     }
   }
 
   static fetchAll() {
-    return db.execute("SELECT * FROM homes");
+    const db = getDB();
+    return db.collection("homes").find().toArray();
   }
 
-  // update() {
-  //   return db.execute(
-  //     `UPDATE homes
-  //    SET houseName = ?, price = ?, location = ?, rating = ?, photo = ?, description = ?
-  //    WHERE id = ?`,
-  //     [
-  //       this.houseName,
-  //       this.price,
-  //       this.location,
-  //       this.rating,
-  //       this.photo,
-  //       this.description,
-  //       this.id,
-  //     ],
-  //   );
-  // }
-
   static findById(homeId) {
-    return db.execute("SELECT * FROM homes WHERE id=?", [homeId]);
+    const db = getDB();
+    return db
+      .collection("homes")
+      .find({ _id: new ObjectId(String(homeId)) })
+      .next();
   }
 
   static deleteById(homeId) {
-    return db.execute("DELETE FROM homes WHERE id=?", [homeId]);
+    const db = getDB();
+    return db
+      .collection("homes")
+      .deleteOne({ _id: new ObjectId(String(homeId)) });
   }
 };

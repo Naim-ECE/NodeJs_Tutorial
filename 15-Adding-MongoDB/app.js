@@ -13,6 +13,7 @@ const storeRouter = require("./routes/storeRouter");
 const { hostRouter } = require("./routes/hostRouter"); // it needs to be destructured for exports.hostRouter = hostRouter
 const rootDir = require("./utils/pathUtil");
 const { errorPage } = require("./controllers/errors");
+const {mongoConnect} = require("./utils/databaseUtil");
 
 const app = express();
 
@@ -35,6 +36,8 @@ app.use("/host", hostRouter);
 app.use(errorPage);
 
 const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`server is running at http://localhost:${PORT}`);
+mongoConnect(() => {
+  app.listen(PORT, () => {
+    console.log(`server is running at http://localhost:${PORT}`);
+  });
 });

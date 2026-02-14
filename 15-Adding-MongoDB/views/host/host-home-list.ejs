@@ -38,11 +38,11 @@
               </div>
               <div class="flex justify-between">
               <a
-                href="/host/edit-home/<%= home.id %>?editing=true"
+                href="/host/edit-home/<%= home._id %>?editing=true"
                 class="bg-green-700 text-white p-[0.45rem] rounded-md cursor-pointer hover:bg-green-800 w-18 text-center">
                 Edit
               </a>
-              <form action="/host/delete-home/<%= home.id %>" method="POST">
+              <form action="/host/delete-home/<%= home._id %>" method="POST">
                 <button
                   type="submit" 
                   class="bg-red-600 text-white p-[0.45rem] rounded-md cursor-pointer hover:bg-red-700 w-18">
