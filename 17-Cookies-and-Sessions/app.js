@@ -14,6 +14,7 @@ const { hostRouter } = require("./routes/hostRouter"); // it needs to be destruc
 const rootDir = require("./utils/pathUtil");
 const { errorPage } = require("./controllers/errors");
 const { default: mongoose } = require("mongoose");
+const authRouter = require("./routes/authRouter");
 
 const app = express();
 
@@ -29,7 +30,17 @@ app.use((req, res, next) => {
 
 app.use(express.urlencoded());
 
+app.use(authRouter);
+
 app.use(storeRouter);
+
+app.use("/host", (req, res, next) => {
+  if (req.isLoggedIn) {
+    next();
+  } else {
+    res.redirect("/login");
+  }
+});
 
 app.use("/host", hostRouter);
 

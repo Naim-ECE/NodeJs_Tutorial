@@ -7,6 +7,7 @@ const getHome = (req, res, next) => {
       registeredHome,
       pageTitle: "My Homes",
       currentPage: "Home",
+      isLoggedIn: req.isLoggedIn,
     });
   });
 };
@@ -17,6 +18,7 @@ const index = (req, res, next) => {
       registeredHome,
       pageTitle: "Home",
       currentPage: "index",
+      isLoggedIn: req.isLoggedIn,
     });
   });
   //res.sendFile(path.join(rootDir, "views", "home.html"));
@@ -26,6 +28,7 @@ exports.getBookings = (req, res, next) => {
   res.render("store/bookings", {
     pageTitle: "My Bookings",
     currentPage: "bookings",
+    isLoggedIn: req.isLoggedIn,
   });
 };
 
@@ -41,6 +44,7 @@ const getFavouriteList = (req, res, next) => {
         favouriteHomes,
         pageTitle: "My Favourites",
         currentPage: "favourite-list",
+        isLoggedIn: req.isLoggedIn,
       });
     });
 };
@@ -97,6 +101,7 @@ exports.getHomeDetails = (req, res, next) => {
         home,
         pageTitle: "Home Details",
         currentPage: "Home",
+        isLoggedIn: req.isLoggedIn,
       });
     }
   });

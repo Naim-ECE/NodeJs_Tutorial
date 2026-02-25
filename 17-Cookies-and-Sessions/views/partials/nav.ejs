@@ -7,29 +7,39 @@
 
       <!-- Nav Links -->
       <div class="space-x-6">
-        <a href="/home" 
-        class="text-white <%= currentPage === "Home" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1">
-          My Homes
-        </a>
         <a href="/"
-        class="text-white <%= currentPage === "index" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1">
+        class="text-white <%= currentPage === "index" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1 transition duration-300">
           Home List
         </a>
-        <a href="/bookings" 
-        class="text-white <%= currentPage === "bookings" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1">
-        Bookings
+        <% if (isLoggedIn) { %>
+          <a href="/home" 
+          class="text-white <%= currentPage === "Home" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1 transition duration-300">
+            My Homes
+          </a>
+          <a href="/bookings" 
+          class="text-white <%= currentPage === "bookings" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1 transition duration-300">
+          Bookings
+          </a>
+          <a href="/favourite-list" 
+          class="text-white <%= currentPage === "favourite-list" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1 transition duration-300">
+          Favourites
         </a>
-        <a href="/favourite-list" 
-        class="text-white <%= currentPage === "favourite-list" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1">
-        Favourites
+        <a href="/host/host-home-list"
+        class="text-white <%= currentPage === "host-home" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1 transition duration-300">
+          Host Home List
+        </a>
+        <a href="/host/add-home" 
+        class="text-white <%= currentPage === "Addhome" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1 transition duration-300">
+        Add Home
+        </a>
+      <% } %>
+       <a href="/login" 
+       class="text-white <%= currentPage === "Login" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1 transition duration-300">
+       Login
        </a>
-       <a href="/host/host-home-list"
-       class="text-white <%= currentPage === "host-home" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1">
-         Host Home List
-       </a>
-       <a href="/host/add-home" 
-       class="text-white <%= currentPage === "Addhome" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1">
-       Add Home
+       <a href="/signup" 
+       class="text-white hover:bg-red-400 hover:rounded-md font-semibold p-1 transition duration-300">
+       Sign up
        </a>
       </div>
 
