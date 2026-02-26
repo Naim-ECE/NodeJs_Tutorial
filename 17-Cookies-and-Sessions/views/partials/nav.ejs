@@ -33,10 +33,19 @@
         Add Home
         </a>
       <% } %>
+
+      <% if (!isLoggedIn) { %>
        <a href="/login" 
        class="text-white <%= currentPage === "Login" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1 transition duration-300">
        Login
        </a>
+       <% } else { %>
+       <form action="/logout" method="POST" class="inline">
+        <button type="submit"
+        class="text-white inline hover:bg-red-400 hover:rounded-md font-semibold p-1 mr-4 transition duration-300">
+        Logout
+        </button>
+       <% } %>
        <a href="/signup" 
        class="text-white hover:bg-red-400 hover:rounded-md font-semibold p-1 transition duration-300">
        Sign up

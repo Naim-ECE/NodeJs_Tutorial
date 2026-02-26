@@ -30,6 +30,14 @@ app.use((req, res, next) => {
 
 app.use(express.urlencoded());
 
+app.use((req, res, next) => {
+  console.log("Cookie check middleware", req.get("Cookie"));
+  req.isLoggedIn = req.get("Cookie")
+    ? req.get("Cookie").split("=")[1] === "true"
+    : "false";
+  next();
+});
+
 app.use(authRouter);
 
 app.use(storeRouter);
