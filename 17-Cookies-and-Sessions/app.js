@@ -7,6 +7,10 @@ const path = require("path");
 
 // external module
 const express = require("express");
+const session = require("express-session");
+const MongoDbStore = require("connect-mongodb-session")(session);
+const DB_PATH =
+  "mongodb+srv://root:root@cluster0.2yvvkoz.mongodb.net/homedb?appName=Cluster0";
 
 // local module
 const storeRouter = require("./routes/storeRouter");
@@ -21,6 +25,11 @@ const app = express();
 app.set("view engine", "ejs"); // It's the default engine extension & it doesn't any have default value.
 app.set("views", "views"); // checks the folder path. In this case 'views' it is. And it has a default path 'views' already been set (means app.set("views") will work just fine). To add a different one the 2nd argument declares the path, so just putting it there would do the work.
 
+const store = new MongoDbStore({
+  uri: DB_PATH,
+  collection: "sessions",
+});
+
 app.use(express.static(path.join(rootDir, "src")));
 
 app.use((req, res, next) => {
@@ -30,20 +39,21 @@ app.use((req, res, next) => {
 
 app.use(express.urlencoded());
 
-app.use((req, res, next) => {
-  console.log("Cookie check middleware", req.get("Cookie"));
-  req.isLoggedIn = req.get("Cookie")
-    ? req.get("Cookie").split("=")[1] === "true"
-    : "false";
-  next();
-});
+app.use(
+  session({
+    secret: "home-rent-secret-key",
+    resave: false,
+    saveUninitialized: true,
+    store: store,
+  }),
+);
 
 app.use(authRouter);
 
 app.use(storeRouter);
 
 app.use("/host", (req, res, next) => {
-  if (req.isLoggedIn) {
+  if (req.session.isLoggedIn) {
     next();
   } else {
     res.redirect("/login");
@@ -55,8 +65,6 @@ app.use("/host", hostRouter);
 app.use(errorPage);
 
 const PORT = 3000;
-const DB_PATH =
-  "mongodb+srv://root:root@cluster0.2yvvkoz.mongodb.net/homedb?appName=Cluster0";
 
 mongoose
   .connect(DB_PATH)
