@@ -24,3 +24,19 @@ exports.postLogOut = (req, res, next) => {
     res.redirect("/");
   });
 };
+
+exports.getSignUp = (req, res, next) => {
+  res.render("auth/signup", {
+    pageTitle: "Sign Up to HomeRnt",
+    currentPage: "Sign Up",
+    isLoggedIn: false,
+    editing: false,
+  });
+};
+
+exports.postSignUp = (req, res, next) => {
+  console.log(req.body);
+  // Here you would typically save the user data to a database
+  // For this example, we'll just redirect to the login page after "signing up"
+  res.redirect("/login");
+};
