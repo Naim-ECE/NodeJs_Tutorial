@@ -1,0 +1,57 @@
+<nav class="bg-red-600 p-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      
+      <div class="text-white font-bold text-lg">
+        HoMeRNT
+      </div>
+
+      <!-- Nav Links -->
+      <div class="space-x-6">
+        <a href="/"
+        class="text-white <%= currentPage === "index" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1 transition duration-300">
+          Home List
+        </a>
+        <% if (isLoggedIn) { %>
+          <a href="/home" 
+          class="text-white <%= currentPage === "Home" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1 transition duration-300">
+            My Homes
+          </a>
+          <a href="/bookings" 
+          class="text-white <%= currentPage === "bookings" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1 transition duration-300">
+          Bookings
+          </a>
+          <a href="/favourite-list" 
+          class="text-white <%= currentPage === "favourite-list" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1 transition duration-300">
+          Favourites
+        </a>
+        <a href="/host/host-home-list"
+        class="text-white <%= currentPage === "host-home" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1 transition duration-300">
+          Host Home List
+        </a>
+        <a href="/host/add-home" 
+        class="text-white <%= currentPage === "Addhome" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1 transition duration-300">
+        Add Home
+        </a>
+      <% } %>
+
+      <% if (!isLoggedIn) { %>
+       <a href="/login" 
+       class="text-white <%= currentPage === "Login" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold p-1 transition duration-300">
+       Login
+       </a>
+       <% } else { %>
+       <form action="/logout" method="POST" class="inline">
+        <button type="submit"
+        class="text-white inline hover:bg-red-400 hover:rounded-md font-semibold p-1 mr-4 transition duration-300">
+        Logout
+        </button>
+       <% } %>
+       <a href="/signup" 
+       class="text-white hover:bg-red-400 hover:rounded-md font-semibold p-1 transition duration-300">
+       Sign up
+       </a>
+      </div>
+
+    </div>
+  </nav>
+  <!-- bg-white text-blue-600 px-4 py-2 rounded hover:bg-blue-100 font-medium -->
