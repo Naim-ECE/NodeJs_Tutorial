@@ -57,7 +57,7 @@
           <!-- Auth Links for Desktop -->
           <div class="hidden md:flex items-center gap-3">
             <a href="/signup"
-              class="text-white hover:bg-red-400 hover:rounded-md font-semibold px-3 py-2 transition duration-300">
+              class="text-white <%= currentPage === "Sign Up" ? "bg-red-400 rounded-md px-3 py-2" : "hover:bg-red-400 hover:rounded-md px-3 py-2" %> font-semibold px-3 py-2 transition duration-300">
               Sign Up
             </a>
             <a href="/login"
@@ -125,7 +125,7 @@
         <!-- Mobile Auth Links -->
         <div class="border-t border-red-500 pt-3 mt-3 space-y-2">
           <a href="/signup"
-            class="block text-white hover:bg-red-400 hover:rounded-md font-semibold px-3 py-2 transition duration-300">
+            class="<%= currentPage === "Sign Up" ? "bg-red-400 rounded-md px-3 py-2" : "hover:bg-red-400 hover:rounded-md px-3 py-2" %> block text-white font-semibold px-3 py-2 transition duration-300">
             Sign Up
           </a>
           <a href="/login"
