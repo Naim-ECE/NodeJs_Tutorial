@@ -1,6 +1,7 @@
 const { check, validationResult } = require("express-validator");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
+const user = require("../models/user");
 
 exports.getLogin = (req, res, next) => {
   res.render("auth/login", {
@@ -9,6 +10,7 @@ exports.getLogin = (req, res, next) => {
     isLoggedIn: false,
     editing: false,
     oldInput: { email: "" },
+    user: {},
   });
 };
 
@@ -29,6 +31,7 @@ exports.getSignUp = (req, res, next) => {
     editing: false,
     errors: [],
     oldInput: { firstName: "", lastName: "", email: "", userType: "" },
+    user: {},
   });
 };
 
@@ -105,6 +108,7 @@ exports.postSignUp = [
         editing: false,
         errors: errors.array().map((error) => error.msg),
         oldInput: { firstName, lastName, email, userType },
+        user: {},
       });
     }
 
@@ -135,6 +139,7 @@ exports.postSignUp = [
             "An error occurred while creating your account. Please try again.",
           ],
           oldInput: { firstName, lastName, email, userType },
+          user: {},
         });
       });
   },
@@ -152,6 +157,7 @@ exports.postLogin = async (req, res, next) => {
       editing: false,
       errors: ["User not found with the provided email"],
       oldInput: { email },
+      user: {},
     });
   }
 
@@ -164,12 +170,18 @@ exports.postLogin = async (req, res, next) => {
       editing: false,
       errors: ["Invalid password"],
       oldInput: { email },
+      user: {},
     });
   }
 
   console.log("Email: ", email, "Password: ", password);
   req.session.isLoggedIn = true;
-  req.session.userId = user._id.toString();
+  req.session.user = {
+    _id: user._id.toString(),
+    firstName: user.firstName,
+    userType: user.userType,
+  };
+  // console.log("Session user: ", req.session.user);
   req.session.save((err) => {
     // ← redirect inside the callback
     if (err) return next(err);
