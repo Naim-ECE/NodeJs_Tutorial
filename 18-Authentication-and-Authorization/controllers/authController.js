@@ -8,6 +8,7 @@ exports.getLogin = (req, res, next) => {
     currentPage: "Login",
     isLoggedIn: false,
     editing: false,
+    oldInput: { email: "" },
   });
 };
 
@@ -139,11 +140,39 @@ exports.postSignUp = [
   },
 ];
 
-exports.postLogin = (req, res, next) => {
-  const { userName, password } = req.body;
-  console.log(userName, password);
+exports.postLogin = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(422).render("auth/login", {
+      pageTitle: "Login",
+      currentPage: "Login",
+      isLoggedIn: false,
+      editing: false,
+      errors: ["User not found with the provided email"],
+      oldInput: { email },
+    });
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return res.status(422).render("auth/login", {
+      pageTitle: "Login",
+      currentPage: "Login",
+      isLoggedIn: false,
+      editing: false,
+      errors: ["Invalid password"],
+      oldInput: { email },
+    });
+  }
+
+  console.log("Email: ", email, "Password: ", password);
   req.session.isLoggedIn = true;
-  // res.cookie("isLoggedIn", true);
-  // req.session.isLoggedIn = true;
-  res.redirect("/");
+  req.session.userId = user._id.toString();
+  req.session.save((err) => {
+    // ← redirect inside the callback
+    if (err) return next(err);
+    res.redirect("/");
+  });
 };

@@ -8,15 +8,17 @@
 
     <main class="max-w-md mx-auto mt-10 px-4 pb-8">
       <form
-        action="/login"
-        method="POST"
-        class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 transition-shadow hover:shadow-xl duration-300"
+      action="/login"
+      method="POST"
+      class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 transition-shadow hover:shadow-xl duration-300"
       >
+      <%- include("../partials/errors") %>
         <!-- Email/Username Input -->
         <input
-          type="text"
-          name="userName"
-          placeholder="Email or Username"
+          type="email"
+          name="email"
+          placeholder="Enter your email"
+          value="<%= oldInput.email ? oldInput.email : "" %>"
           class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none
                  focus:ring-2 focus:ring-red-400 focus:border-transparent transition-all duration-200 mb-5 bg-gray-50 hover:bg-white"
           required
