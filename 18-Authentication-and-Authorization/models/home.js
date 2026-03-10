@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Favourite = require("./favourite");
 
 const homeSchema = mongoose.Schema({
   houseName: {
@@ -22,11 +21,11 @@ const homeSchema = mongoose.Schema({
   description: String,
 });
 
-homeSchema.pre("findOneAndDelete", async function () {
-  console.log("Pre hook for deleting home is called");
-  const homeId = this.getQuery()._id;
-  await Favourite.deleteMany({ houseId: homeId });
-});
+// homeSchema.pre("findOneAndDelete", async function () {
+//   console.log("Pre hook for deleting home is called");
+//   const homeId = this.getQuery()._id;
+//   await Favourite.deleteMany({ houseId: homeId });
+// });
 
 module.exports = mongoose.model("Home", homeSchema); // this creates a class named "Home" and it is based on the homeSchema. It also creates a collection named "homes" in the database. The collection name is the plural form of the model name (Home -> Homes).
 
