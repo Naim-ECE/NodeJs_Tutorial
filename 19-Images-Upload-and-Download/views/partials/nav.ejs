@@ -1,0 +1,165 @@
+<nav class="bg-red-600 shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 py-3">
+    <div class="flex justify-between items-center">
+
+      <!-- Logo/Brand -->
+      <div class="text-white font-bold text-2xl shrink-0">
+        HoMeRNT
+      </div>
+
+      <!-- Desktop Navigation Links -->
+      <div class="hidden md:flex items-center gap-6">
+        <a href="/"
+          class="text-white <%= currentPage === "index" ? "bg-red-400 rounded-md px-3 py-2" : "hover:bg-red-400 hover:rounded-md px-3 py-2" %> font-semibold transition duration-300">
+          <svg class="inline w-4 h-4 mr-1" fill="white" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Home List
+        </a>
+
+        <% if (isLoggedIn) { %>
+          <% if(user && user.userType !== "host") { %>
+            <a href="/home"
+              class="text-white <%= currentPage === "Home" ? "bg-red-400 rounded-md px-3 py-2" : "hover:bg-red-400 hover:rounded-md px-3 py-2" %> font-semibold transition duration-300">
+              <svg class="inline w-4 h-4 mr-1" fill="white" viewBox="0 0 24 24"><path d="M3 13h2v8H3zm4-8h2v16H7zm4-2h2v18h-2zm4 4h2v14h-2zm4-4h2v18h-2z"/></svg> My Homes
+            </a>
+            <a href="/bookings"
+              class="text-white <%= currentPage === "bookings" ? "bg-red-400 rounded-md px-3 py-2" : "hover:bg-red-400 hover:rounded-md px-3 py-2" %> font-semibold transition duration-300">
+              <svg class="inline w-4 h-4 mr-1" fill="white" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-5-5h4v4h-4z"/></svg> Bookings
+            </a>
+            <a href="/favourite-list"
+              class="text-white <%= currentPage === "favourite-list" ? "bg-red-400 rounded-md px-3 py-2" : "hover:bg-red-400 hover:rounded-md px-3 py-2" %> font-semibold transition duration-300">
+              <svg class="inline w-4 h-4 mr-1" fill="white" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> Favourites
+            </a>
+          <% } else { %>
+            <a href="/host/host-home-list"
+              class="text-white <%= currentPage === "host-home" ? "bg-red-400 rounded-md px-3 py-2" : "hover:bg-red-400 hover:rounded-md px-3 py-2" %> font-semibold transition duration-300">
+              <svg class="inline w-4 h-4 mr-1" fill="white" viewBox="0 0 24 24"><path d="M12 2L2 12h3v8h14v-8h3L12 2zm7 17h-2v-6h-6v6h-2v-8h10v8z"/></svg> Host Homes
+            </a>
+            <a href="/host/add-home"
+              class="text-white <%= currentPage === "Addhome" ? "bg-red-400 rounded-md px-3 py-2" : "hover:bg-red-400 hover:rounded-md px-3 py-2" %> font-semibold transition duration-300">
+              <svg class="inline w-4 h-4 mr-1" fill="white" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> Add Home
+            </a>
+          <% } %>
+        <% } %>
+      </div>
+
+      <!-- Right Section: User Account or Auth Links -->
+      <div class="flex items-center gap-4">
+        <% if (isLoggedIn) { %>
+          <!-- User Avatar & Logout -->
+          <div class="hidden md:flex items-center gap-3 bg-red-500 rounded-full px-2 py-1">
+            <div class="w-8 h-8 rounded-full bg-red-300 flex items-center justify-center text-white font-bold text-sm">
+              U
+            </div>
+            <form action="/logout" method="POST" class="inline m-0">
+              <button type="submit"
+                class="text-white font-semibold transition duration-300 hover:text-red-100 cursor-pointer">
+                Logout
+              </button>
+            </form>
+          </div>
+        <% } else { %>
+          <!-- Auth Links for Desktop -->
+          <div class="hidden md:flex items-center gap-3">
+            <a href="/signup"
+              class="text-white <%= currentPage === "Sign Up" ? "bg-red-400 rounded-md px-3 py-2" : "hover:bg-red-400 hover:rounded-md px-3 py-2" %> font-semibold px-3 py-2 transition duration-300">
+              Sign Up
+            </a>
+            <a href="/login"
+              class="text-white <%= currentPage === "Login" ? "bg-red-400 rounded-md px-3 py-2" : "hover:bg-red-400 hover:rounded-md px-3 py-2" %> font-semibold transition duration-300">
+              Login
+            </a>
+          </div>
+        <% } %>
+
+        <!-- Mobile Hamburger Menu Button -->
+        <button class="hamburger md:hidden flex flex-col gap-1 p-2 hover:bg-red-500 rounded-md transition duration-300" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span class="w-6 h-0.5 bg-white block transition duration-300"></span>
+          <span class="w-6 h-0.5 bg-white block transition duration-300"></span>
+          <span class="w-6 h-0.5 bg-white block transition duration-300"></span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-menu hidden md:hidden mt-4 pb-4 border-t border-red-500 pt-4 space-y-2">
+      <a href="/"
+        class="block text-white <%= currentPage === "index" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold px-3 py-2 transition duration-300">
+        <svg class="inline w-4 h-4 mr-2" fill="white" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Home List
+      </a>
+
+      <% if (isLoggedIn) { %>
+        <a href="/home"
+          class="block text-white <%= currentPage === "Home" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold px-3 py-2 transition duration-300">
+          <svg class="inline w-4 h-4 mr-2" fill="white" viewBox="0 0 24 24"><path d="M3 13h2v8H3zm4-8h2v16H7zm4-2h2v18h-2zm4 4h2v14h-2zm4-4h2v18h-2z"/></svg> My Homes
+        </a>
+        <a href="/bookings"
+          class="block text-white <%= currentPage === "bookings" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold px-3 py-2 transition duration-300">
+          <svg class="inline w-4 h-4 mr-2" fill="white" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-5-5h4v4h-4z"/></svg> Bookings
+        </a>
+        <a href="/favourite-list"
+          class="block text-white <%= currentPage === "favourite-list" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold px-3 py-2 transition duration-300">
+          <svg class="inline w-4 h-4 mr-2" fill="white" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> Favourites
+        </a>
+        <a href="/host/host-home-list"
+          class="block text-white <%= currentPage === "host-home" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold px-3 py-2 transition duration-300">
+          <svg class="inline w-4 h-4 mr-2" fill="white" viewBox="0 0 24 24"><path d="M12 2L2 12h3v8h14v-8h3L12 2zm7 17h-2v-6h-6v6h-2v-8h10v8z"/></svg> Host Homes
+        </a>
+        <a href="/host/add-home"
+          class="block text-white <%= currentPage === "Addhome" ? "bg-red-400 rounded-md" : "hover:bg-red-400 hover:rounded-md" %> font-semibold px-3 py-2 transition duration-300">
+          <svg class="inline w-4 h-4 mr-2" fill="white" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> Add Home
+        </a>
+
+        <!-- Mobile User Section -->
+        <div class="border-t border-red-500 pt-3 mt-3">
+          <div class="flex items-center gap-2 px-3 py-2 bg-red-500 rounded-md">
+            <div class="w-8 h-8 rounded-full bg-red-300 flex items-center justify-center text-white font-bold text-sm">
+              U
+            </div>
+            <span class="text-white font-semibold">User</span>
+          </div>
+          <form action="/logout" method="POST" class="mt-2">
+            <button type="submit"
+              class="w-full text-left text-white hover:bg-red-400 hover:rounded-md font-semibold px-3 py-2 transition duration-300 cursor-pointer">
+              <svg class="inline w-4 h-4 mr-2" fill="white" viewBox="0 0 24 24"><path d="M16.66 4.52l2.83 2.83-2.83 2.83 2.83 2.83-2.83 2.83 2.83 2.83-2.83 2.83-2.83-2.83-2.83 2.83-2.83-2.83 2.83-2.83-2.83-2.83 2.83-2.83-2.83-2.83 2.83-2.83-2.83-2.83 2.83-2.83L12 4.52l2.83-2.83 2.83 2.83z"/></svg> Logout
+            </button>
+          </form>
+        </div>
+      <% } else { %>
+        <!-- Mobile Auth Links -->
+        <div class="border-t border-red-500 pt-3 mt-3 space-y-2">
+          <a href="/signup"
+            class="<%= currentPage === "Sign Up" ? "bg-red-400 rounded-md px-3 py-2" : "hover:bg-red-400 hover:rounded-md px-3 py-2" %> block text-white font-semibold px-3 py-2 transition duration-300">
+            Sign Up
+          </a>
+          <a href="/login"
+            class="block text-white <%= currentPage === "Login" ? "bg-red-400 rounded-md px-3 py-2" : "hover:bg-red-400 hover:rounded-md px-3 py-2" %> font-semibold transition duration-300">
+            Login
+          </a>
+        </div>
+      <% } %>
+    </div>
+
+  </div>
+</nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.querySelector('.hamburger');
+    const mobileMenu = document.querySelector('.mobile-menu');
+
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        hamburger.setAttribute('aria-expanded', mobileMenu.classList.contains('hidden') ? 'false' : 'true');
+      });
+
+      // Close menu on link click
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+          hamburger.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  });
+</script>
