@@ -12,9 +12,8 @@ const getAddHome = (req, res, next) => {
 };
 
 const postAddHome = (req, res, next) => {
-  console.log(req.body);
-
   const { houseName, price, location, rating, photo, description } = req.body;
+  console.log(houseName, price, location, rating, photo, description);
   const home = new Home({
     houseName,
     price,
