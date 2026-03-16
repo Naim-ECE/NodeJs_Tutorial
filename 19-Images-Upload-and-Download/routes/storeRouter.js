@@ -8,6 +8,7 @@ const {
   getHomeDetails,
   postAddToFavourite,
   deleteFavouriteList,
+  getHouseRules,
 } = require("../controllers/storeController");
 
 storeRouter.get("/", index);
@@ -17,5 +18,6 @@ storeRouter.get("/favourite-list", getFavouriteList);
 storeRouter.get("/home/:homeId", getHomeDetails);
 storeRouter.post("/favourite-list", postAddToFavourite);
 storeRouter.post("/delete-favourite-list/:homeId", deleteFavouriteList);
+storeRouter.get("/rules/:homeId", getHouseRules);
 
 module.exports = storeRouter;

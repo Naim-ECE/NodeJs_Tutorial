@@ -12,8 +12,19 @@ const getAddHome = (req, res, next) => {
 };
 
 const postAddHome = (req, res, next) => {
-  const { houseName, price, location, rating, photo, description } = req.body;
-  console.log(houseName, price, location, rating, photo, description);
+  const { houseName, price, location, rating, description } = req.body;
+  console.log(houseName, price, location, rating, description);
+  console.log("File: ", req.file); // this is the file object created by multer middleware. It contains the details of the uploaded file, including the path where it is stored on the server.
+
+  if (!req.file) {
+    console.log("No file uploaded");
+    return res
+      .status(400)
+      .send("No image file uploaded. Please upload a jpg, jpeg, or png file.");
+  }
+
+  const photo = req.file.path; // Store the file path of the uploaded image in the database. This path can be used to serve the image later.
+
   const home = new Home({
     houseName,
     price,
@@ -57,16 +68,20 @@ exports.getEditHome = (req, res, next) => {
 };
 
 exports.postEditHome = (req, res, next) => {
-  const { id, houseName, price, location, rating, photo, description } =
-    req.body;
+  const { id, houseName, price, location, rating, description } = req.body;
+
   Home.findById(id)
     .then((home) => {
       home.houseName = houseName;
       home.price = price;
       home.location = location;
       home.rating = rating;
-      home.photo = photo;
       home.description = description;
+
+      if (req.file) {
+        home.photo = req.file.path;
+      }
+
       home
         .save()
         .then((result) => {

@@ -1,5 +1,7 @@
 const Home = require("../models/home");
 const User = require("../models/user");
+const path = require("path");
+const rootDir = path.dirname(require.main.filename);
 
 const getHome = (req, res, next) => {
   Home.find().then((registeredHome) => {
@@ -96,6 +98,34 @@ exports.getHomeDetails = (req, res, next) => {
     }
   });
 };
+
+exports.getHouseRules = [
+  (req, res, next) => {
+    if (!req.session.isLoggedIn) {
+      return res.redirect("/login");
+    }
+    next();
+  },
+  (req, res, next) => {
+    const homeId = req.params.homeId;
+    Home.findById(homeId).then((home) => {
+      if (!home) {
+        console.log("Home not found");
+        res.redirect("/home");
+      } else {
+        console.log("Home details found ", home);
+        const rulesFileName = "House_Rules.pdf";
+        const filePath = path.join(rootDir, "rules", rulesFileName);
+        res.download(filePath, "House_Rules.pdf", (err) => {
+          if (err) {
+            console.log("Error downloading file: ", err);
+            res.status(500).send("Error downloading file");
+          }
+        });
+      }
+    });
+  },
+];
 
 exports.registeredHome = this.registeredHome;
 exports.getHome = getHome;

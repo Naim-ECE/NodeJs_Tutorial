@@ -11,13 +11,14 @@ const session = require("express-session");
 const MongoDbStore = require("connect-mongodb-session")(session);
 const DB_PATH =
   "mongodb+srv://root:root@cluster0.2yvvkoz.mongodb.net/homedb?appName=Cluster0";
+const { default: mongoose } = require("mongoose");
+const multer = require("multer");
 
 // local module
 const storeRouter = require("./routes/storeRouter");
 const { hostRouter } = require("./routes/hostRouter"); // it needs to be destructured for exports.hostRouter = hostRouter
 const rootDir = require("./utils/pathUtil");
 const { errorPage } = require("./controllers/errors");
-const { default: mongoose } = require("mongoose");
 const authRouter = require("./routes/authRouter");
 
 const app = express();
@@ -30,14 +31,49 @@ const store = new MongoDbStore({
   collection: "sessions",
 });
 
-app.use(express.static(path.join(rootDir, "src")));
-
 app.use((req, res, next) => {
   console.log(req.url, req.method);
   next();
 });
 
+// const multerOptions = {
+//   dest: "uploads/",
+// }; // doesn't give us the control over the file name and the file type. It just stores the file in the specified destination folder with a random name and the original file extension. It doesn't check the file type or the file size. It just stores the file as it is. So we need to use the storage engine of multer to have more control over the file upload process.
+
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads"); // this is the destination folder where the uploaded files will be stored. It is relative to the root directory of the project. So it will be created in the root directory if it doesn't exist.
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname); // Gets the original file extension (e.g., ".jpg")
+    cb(null, `${file.fieldname}-${Date.now()}${ext}`); // Creates a unique filename using field name + timestamp + original extension
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype.startsWith("image/jpeg") ||
+    file.mimetype.startsWith("image/png") ||
+    file.mimetype.startsWith("image/jpg")
+  ) {
+    cb(null, true); // Accept the file
+  } else {
+    cb(new Error("Only image files are allowed!"), false); // Reject the file
+  }
+};
+
+const multerOptions = {
+  storage: multerStorage,
+  fileFilter: fileFilter,
+};
+
 app.use(express.urlencoded());
+app.use(multer(multerOptions).single("photo")); // Multer middleware to upload a single file from the "photo" field. File info becomes available in req.file.
+
+app.use(express.static(path.join(rootDir, "src")));
+app.use("/uploads", express.static(path.join(rootDir, "uploads")));
+app.use("/host/uploads", express.static(path.join(rootDir, "uploads")));
+app.use("/home/uploads", express.static(path.join(rootDir, "uploads")));
 
 app.use(
   session({
