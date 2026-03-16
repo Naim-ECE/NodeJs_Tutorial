@@ -1,5 +1,6 @@
 const Home = require("../models/home");
 const user = require("../models/user");
+const fs = require("fs");
 
 const getAddHome = (req, res, next) => {
   res.render("host/edit-home", {
@@ -79,7 +80,15 @@ exports.postEditHome = (req, res, next) => {
       home.description = description;
 
       if (req.file) {
-        home.photo = req.file.path;
+        fs.unlink(home.photo, (err) => {
+          if (err) {
+            console.log("Error while deleting old image: ", err);
+          } else {
+            console.log("Old image deleted successfully");
+          }
+        });
+
+        home.photo = req.file.path; // Update the photo path with the new uploaded image
       }
 
       home
