@@ -1,0 +1,6 @@
+@media (max-width: 767px) {
+    #root {
+     display: flex;
+     justify-content: center;   
+    }
+}
