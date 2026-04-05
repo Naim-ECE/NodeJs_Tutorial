@@ -1,23 +1,41 @@
-import { createContext } from "react";
-import { useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
+import {
+  addItemToServer,
+  deleteItemFromServer,
+  getItemsFromServer,
+  markItemAsCompletedOnServer,
+} from "../../services/itemService";
 
 export const TodoItemsContext = createContext({
   items: [],
   addNewItem: () => {},
   deleteItem: () => {},
+  completeItem: () => {},
 });
 
-// pure function
 const todoItemsReducer = (currentTodoItemsState, action) => {
   let newTodoItems = currentTodoItemsState;
-  if (action.type === "NEW_ITEM") {
+  if (action.type === "LOAD_ITEMS") {
+    newTodoItems = action.payload.items;
+  } else if (action.type === "NEW_ITEM") {
     newTodoItems = [
       ...currentTodoItemsState,
-      { name: action.payload.itemName, dueDate: action.payload.itemDueDate },
+      {
+        id: action.payload.itemId,
+        name: action.payload.itemName,
+        dueDate: action.payload.itemDueDate,
+        completed: false,
+      },
     ];
   } else if (action.type === "DELETE_ITEM") {
     newTodoItems = currentTodoItemsState.filter(
-      (item) => item.name !== action.payload.itemName
+      (item) => item.id !== action.payload.itemId,
+    );
+  } else if (action.type === "COMPLETE_ITEM") {
+    newTodoItems = currentTodoItemsState.map((item) =>
+      item.id === action.payload.itemId
+        ? { ...item, completed: !item.completed }
+        : item,
     );
   }
   return newTodoItems;
@@ -26,35 +44,52 @@ const todoItemsReducer = (currentTodoItemsState, action) => {
 const TodoItemsContextProvider = ({ children }) => {
   const [newTodoItems, dispatchTodoItems] = useReducer(todoItemsReducer, []);
 
-  const addNewItem = (itemName, itemDueDate) => {
-    const newItemAction = {
+  // ✅ Inside the component, using dispatchTodoItems correctly
+  useEffect(() => {
+    getItemsFromServer().then((serverItems) => {
+      dispatchTodoItems({
+        type: "LOAD_ITEMS",
+        payload: {
+          items: serverItems,
+        },
+      });
+    });
+  }, []);
+
+  const addNewItem = async (itemName, itemDueDate) => {
+    const serverItem = await addItemToServer(itemName, itemDueDate);
+    dispatchTodoItems({
       type: "NEW_ITEM",
       payload: {
-        itemName,
-        itemDueDate,
+        itemId: serverItem.id,
+        itemName: serverItem.name,
+        itemDueDate: serverItem.dueDate,
       },
-    };
-    dispatchTodoItems(newItemAction);
+    });
   };
 
-  const deleteItem = (todoItemName) => {
-    const deleteItemAction = {
+  const deleteItem = async (id) => {
+    await deleteItemFromServer(id);
+    dispatchTodoItems({
       type: "DELETE_ITEM",
-      payload: {
-        itemName: todoItemName,
-      },
-    };
-    dispatchTodoItems(deleteItemAction);
+      payload: { itemId: id },
+    });
   };
+
+  const completeItem = async (id) => {
+    const currentItem = newTodoItems.find((item) => item.id === id);
+    const newCompletedStatus = !currentItem?.completed;
+    await markItemAsCompletedOnServer(id, newCompletedStatus);
+    dispatchTodoItems({
+      type: "COMPLETE_ITEM",
+      payload: { itemId: id },
+    });
+  };
+
   return (
     <TodoItemsContext.Provider
-      value={{
-        items: newTodoItems,
-        addNewItem,
-        deleteItem,
-      }}
+      value={{ items: newTodoItems, addNewItem, deleteItem, completeItem }}
     >
-      {/*methods are first class object*/}
       {children}
     </TodoItemsContext.Provider>
   );

@@ -1,14 +1,16 @@
 import { useContext } from "react";
-import styles from "./WelcomeMessage.module.css";
 import { TodoItemsContext } from "../store/todo-item-store";
 
 const WelcomeMessage = () => {
   const contextObject = useContext(TodoItemsContext);
   const todoItems = contextObject.items;
+  
   return (
     <>
       {todoItems.length === 0 && (
-        <p className={styles.inMessage}>Welcome! Let's add some tasks!</p>
+        <div className="text-center py-12">
+          <p className="text-xl text-gray-400 font-semibold">✨ Welcome! Let's add some tasks to get started ✨</p>
+        </div>
       )}
     </>
   );

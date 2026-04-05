@@ -6,16 +6,13 @@ const express = require("express");
 const DB_PATH =
   "mongodb+srv://root:root@cluster0.2yvvkoz.mongodb.net/todo?appName=Cluster0";
 const { default: mongoose } = require("mongoose");
+const cors = require("cors");
+const todoItemsRouter = require("./routes/todoItemsRouter");
 
 // local module
 const errorPage = require("./controllers/errors").errorPage;
 
 const app = express();
-
-const store = new MongoDbStore({
-  uri: DB_PATH,
-  collection: "sessions",
-});
 
 app.use((req, res, next) => {
   console.log(req.url, req.method);
@@ -24,7 +21,10 @@ app.use((req, res, next) => {
 
 app.use(express.urlencoded());
 
-app.use(express.static(path.join(rootDir, "src")));
+app.use(express.json());
+app.use(cors());
+
+app.use("/api/todo", todoItemsRouter);
 
 app.use(errorPage);
 

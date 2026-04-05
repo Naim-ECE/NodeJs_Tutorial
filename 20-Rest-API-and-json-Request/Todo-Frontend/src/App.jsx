@@ -1,5 +1,3 @@
-import "./App.css";
-import Container from "./components/Container";
 import AppName from "./components/AppName";
 import AddTodo from "./components/AddTodo";
 import TodoItems from "./components/TodoItems";
@@ -8,18 +6,18 @@ import TodoItemsContextProvider from "./store/todo-item-store";
 
 function App() {
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6">
       <TodoItemsContextProvider>
-        <center>
+        <div className="max-w-3xl mx-auto">
           <AppName />
-          <Container>
+          <div className="bg-white rounded-lg shadow-2xl p-6 sm:p-8">
             <AddTodo />
             <WelcomeMessage />
             <TodoItems />
-          </Container>
-        </center>
+          </div>
+        </div>
       </TodoItemsContextProvider>
-    </>
+    </div>
   );
 }
 
